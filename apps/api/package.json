@@ -1,0 +1,34 @@
+{
+    "name": "@wajoss/api",
+    "description": "Simple WA api for baileys-api v4",
+    "private": true,
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "node .",
+        "pm2": "pm2-runtime start npm -- start"
+    },
+    "engines": {
+        "node": ">=14.5.0"
+    },
+    "dependencies": {
+        "@adiwajshing/keyed-db": "^0.2.4",
+        "@whiskeysockets/baileys": "^6.5.0",
+        "axios": "^1.6.2",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "express-validator": "^6.15.0",
+        "helmet": "^7.1.0",
+        "node-cleanup": "^2.1.2",
+        "npm": "^9.9.2",
+        "qrcode": "^1.5.3",
+        "qrcode-terminal": "^0.12.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.56.0",
+        "eslint-config-prettier": "^8.10.0",
+        "eslint-config-xo": "^0.43.1",
+        "eslint-plugin-prettier": "^4.2.1",
+        "prettier": "^2.8.8"
+    }
+}
