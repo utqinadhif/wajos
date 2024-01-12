@@ -7,9 +7,21 @@ import getMessages from './../controllers/getMessages.js'
 
 const router = Router()
 
-router.get('/get', query('id').notEmpty(), requestValidator, sessionValidator, controller.getList)
+router.get(
+    '/get',
+    query('id').notEmpty(),
+    requestValidator,
+    sessionValidator,
+    controller.getList
+)
 
-router.get('/get/:jid', query('id').notEmpty(), requestValidator, sessionValidator, getMessages)
+router.get(
+    '/get/:jid',
+    query('id').notEmpty(),
+    requestValidator,
+    sessionValidator,
+    getMessages
+)
 
 router.post(
     '/send',
@@ -21,6 +33,12 @@ router.post(
     controller.send
 )
 
-router.post('/send-bulk', query('id').notEmpty(), requestValidator, sessionValidator, controller.sendBulk)
+router.post(
+    '/send-bulk',
+    query('id').notEmpty(),
+    requestValidator,
+    sessionValidator,
+    controller.sendBulk
+)
 
 export default router

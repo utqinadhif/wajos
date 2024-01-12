@@ -1,4 +1,10 @@
-import { getSession, getChatList, isExists, sendMessage, formatPhone } from './../whatsapp.js'
+import {
+    getSession,
+    getChatList,
+    isExists,
+    sendMessage,
+    formatPhone,
+} from './../whatsapp.js'
 import response from './../response.js'
 
 const getList = (req, res) => {
@@ -14,7 +20,12 @@ const send = async (req, res) => {
         const exists = await isExists(session, receiver)
 
         if (!exists) {
-            return response(res, 400, false, 'The receiver number is not exists.')
+            return response(
+                res,
+                400,
+                false,
+                'The receiver number is not exists.'
+            )
         }
 
         await sendMessage(session, receiver, { text: message })
@@ -54,7 +65,12 @@ const sendBulk = async (req, res) => {
     }
 
     if (errors.length === 0) {
-        return response(res, 200, true, 'All messages has been successfully sent.')
+        return response(
+            res,
+            200,
+            true,
+            'All messages has been successfully sent.'
+        )
     }
 
     const isAllFailed = errors.length === req.body.length
@@ -63,7 +79,9 @@ const sendBulk = async (req, res) => {
         res,
         isAllFailed ? 500 : 200,
         !isAllFailed,
-        isAllFailed ? 'Failed to send all messages.' : 'Some messages has been successfully sent.',
+        isAllFailed
+            ? 'Failed to send all messages.'
+            : 'Some messages has been successfully sent.',
         { errors }
     )
 }

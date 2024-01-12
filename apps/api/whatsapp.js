@@ -30,20 +30,25 @@ const sendHook = async (m, sessionId) => {
         })
             .then(function (response) {
                 //handle success
-                if (process.env.N_DEBUG == 'true') console.info('nadhif', 'success', response)
+                if (process.env.N_DEBUG == 'true')
+                    console.info('nadhif', 'success', response)
             })
             .catch(function (response) {
                 //handle error
-                if (process.env.N_DEBUG == 'true') console.error('nadhif', 'error', response);
-            });
+                if (process.env.N_DEBUG == 'true')
+                    console.error('nadhif', 'error', response)
+            })
     } else {
-        if (process.env.N_DEBUG == 'true') console.log('nadhif', 'error', 'No Hook', m)
+        if (process.env.N_DEBUG == 'true')
+            console.log('nadhif', 'error', 'No Hook', m)
     }
 }
 
 const createSession = async (sessionId, res = null) => {
     const { version } = await fetchLatestBaileysVersion()
-    const { state, saveCreds } = await useMultiFileAuthState(sessionsDir('beopati_' + sessionId))
+    const { state, saveCreds } = await useMultiFileAuthState(
+        sessionsDir('beopati_' + sessionId)
+    )
 
     const store = makeInMemoryStore({})
 
@@ -83,7 +88,10 @@ const createSession = async (sessionId, res = null) => {
             case 'close':
                 const statusCode = lastDisconnect?.error?.output?.statusCode
 
-                if (statusCode === DisconnectReason.loggedOut || !shouldReconnect(sessionId)) {
+                if (
+                    statusCode === DisconnectReason.loggedOut ||
+                    !shouldReconnect(sessionId)
+                ) {
                     if (res && !res.headersSent) {
                         response(res, 500, false, 'Unable to create session.')
                     }
@@ -95,22 +103,24 @@ const createSession = async (sessionId, res = null) => {
                     () => {
                         createSession(sessionId, res)
                     },
-                    statusCode === DisconnectReason.restartRequired ? 0 : parseInt(process.env.RECONNECT_INTERVAL ?? 0)
+                    statusCode === DisconnectReason.restartRequired
+                        ? 0
+                        : parseInt(process.env.RECONNECT_INTERVAL ?? 0)
                 )
-                break;
+                break
 
             case 'connecting':
                 console.log('🟡 try to reconnecting.')
-                break;
+                break
 
             case 'open':
                 retries.delete(sessionId)
-                await wa.sendPresenceUpdate("available")
-                await wa.updateProfileStatus("🟢 Online")
-                break;
+                await wa.sendPresenceUpdate('available')
+                await wa.updateProfileStatus('🟢 Online')
+                break
 
             default:
-                break;
+                break
         }
 
         if (update.qr) {
@@ -118,7 +128,13 @@ const createSession = async (sessionId, res = null) => {
                 try {
                     const qr = await toDataURL(update.qr)
 
-                    response(res, 200, true, 'QR code received, please scan the QR code.', { qr })
+                    response(
+                        res,
+                        200,
+                        true,
+                        'QR code received, please scan the QR code.',
+                        { qr }
+                    )
                 } catch {
                     response(res, 500, false, 'Unable to create QR code.')
                 }
@@ -133,7 +149,6 @@ const createSession = async (sessionId, res = null) => {
                 deleteSession(sessionId)
             }
         }
-
     })
 
     wa.ev.on('messages.upsert', async (m) => {
@@ -146,7 +161,8 @@ const createSession = async (sessionId, res = null) => {
 
             // await wa.sendReadReceipt(message.key.remoteJid, message.key.participant, [message.key.id])
 
-            if (message.key.remoteJid != 'status@broadcast') await sendHook(m, sessionId)
+            if (message.key.remoteJid != 'status@broadcast')
+                await sendHook(m, sessionId)
         }
     })
 }
@@ -198,7 +214,7 @@ const isExists = async (session, jid, isGroup = false) => {
             return Boolean(result.id)
         }
 
-        [result] = await session.onWhatsApp(jid)
+        ;[result] = await session.onWhatsApp(jid)
 
         return result.exists
     } catch {
@@ -251,11 +267,10 @@ const cleanup = async () => {
     console.log('Running cleanup before exit.')
 
     sessions.forEach(async (session, sessionId) => {
-
         session.store.writeToFile(sessionsDir(`${sessionId}_store.json`))
 
-        await session.updateProfileStatus("🔴 Offline")
-        await session.sendPresenceUpdate("unavailable")
+        await session.updateProfileStatus('🔴 Offline')
+        await session.sendPresenceUpdate('unavailable')
     })
 }
 

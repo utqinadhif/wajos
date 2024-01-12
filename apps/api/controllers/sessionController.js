@@ -1,4 +1,9 @@
-import { isSessionExists, createSession, getSession, deleteSession } from './../whatsapp.js'
+import {
+    isSessionExists,
+    createSession,
+    getSession,
+    deleteSession,
+} from './../whatsapp.js'
 import response from './../response.js'
 
 const find = (req, res) => {
@@ -16,17 +21,21 @@ const check = (req, res) => {
 
     const user = session?.user
 
-    if(user) return response(res, 200, true, 'User connected.')
+    if (user) return response(res, 200, true, 'User connected.')
 
     response(res, 404, false, 'User not connect.')
 }
-
 
 const add = (req, res) => {
     const { id } = req.body
 
     if (isSessionExists(id)) {
-        return response(res, 409, false, 'Session already exists, please use another id.')
+        return response(
+            res,
+            409,
+            false,
+            'Session already exists, please use another id.'
+        )
     }
 
     createSession(id, res)
