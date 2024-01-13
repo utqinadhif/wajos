@@ -171,6 +171,10 @@ const getSession = (sessionId) => {
     return sessions.get(sessionId) ?? null
 }
 
+const getAllSession = () => {
+    return sessions
+}
+
 const deleteSession = (sessionId) => {
     const sessionFile = 'beopati_' + sessionId
     const storeFile = `${sessionId}_store.json`
@@ -308,6 +312,7 @@ export {
     isSessionExists,
     createSession,
     getSession,
+    getAllSession,
     deleteSession,
     getChatList,
     isExists,

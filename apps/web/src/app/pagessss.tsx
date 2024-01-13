@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Navbar from '../navbar'
+import Navbar from './navbar'
 
 const Tambah = async () => {
     const apiF = await fetch('http://localhost:2000/session/add', {

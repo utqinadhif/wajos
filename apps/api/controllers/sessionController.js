@@ -2,6 +2,7 @@ import {
     isSessionExists,
     createSession,
     getSession,
+    getAllSession,
     deleteSession,
 } from './../whatsapp.js'
 import response from './../response.js'
@@ -57,4 +58,12 @@ const del = async (req, res) => {
     response(res, 200, true, 'The session has been successfully deleted.')
 }
 
-export { find, add, del, check }
+const all = async (req, res) => {
+    const session = getAllSession()
+
+    if (session) return response(res, 200, true, session)
+
+    response(res, 404, false, 'Session not found.')
+}
+
+export { find, add, del, check, all }
