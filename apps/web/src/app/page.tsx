@@ -5,7 +5,7 @@ const Home = () => {
     return (
         <>
             <Navbar />
-            <main className="px-4 py-6 space-y-2">
+            <main className="mx-auto max-w-7xl px-4 py-6 space-y-2">
                 <div className="font-semibold text-lg mb-5">
                     Selamat datang di aplikasi Wa Joss
                 </div>

@@ -29,8 +29,8 @@ const Add = () => {
         const resCheckApi = await checkApi.json()
 
         if (resCheckApi.success) {
-            clearTimeout(toScan);
-            clearTimeout(toCheck);
+            clearTimeout(toScan)
+            clearTimeout(toCheck)
             setModalError('Device connected successfully')
             setModalErrorShow(true)
             setModalShow(false)
@@ -42,7 +42,7 @@ const Add = () => {
                 setModalShow(true)
             }
             toCheck = setTimeout(function () {
-                checkIsLogin(id);
+                checkIsLogin(id)
             }, 5000)
         }
     }
@@ -66,8 +66,8 @@ const Add = () => {
         }
 
         toScan = setTimeout(function () {
-            getQr(id);
-        }, 20000);
+            getQr(id)
+        }, 20000)
     }
 
     const handleClick = async () => {
@@ -103,10 +103,14 @@ const Add = () => {
                 )}
                 Add WA
             </button>
-            <Modal show={modalShow} title="Tambah WA" callback={(props: boolean) => {
-                setModalShow(props)
-                setLoadingShow(props)
-            }}>
+            <Modal
+                show={modalShow}
+                title="Tambah WA"
+                callback={(props: boolean) => {
+                    setModalShow(props)
+                    setLoadingShow(props)
+                }}
+            >
                 <div className="flex justify-center items-center">
                     {qrUrl ? (
                         <Image
@@ -129,16 +133,24 @@ const Add = () => {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                             >
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                />
                                 <path d="M12 3a9 9 0 1 0 9 9" />
                             </svg>
                         </div>
                     )}
                 </div>
             </Modal>
-            <Modal show={modalErrorShow} title="Peringatan" callback={(props: boolean) => {
-                setModalErrorShow(props)
-            }}>
+            <Modal
+                show={modalErrorShow}
+                title="Peringatan"
+                callback={(props: boolean) => {
+                    setModalErrorShow(props)
+                }}
+            >
                 {modalError}
             </Modal>
         </>

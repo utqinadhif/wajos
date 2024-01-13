@@ -4,7 +4,7 @@ const Inbox = () => {
     return (
         <>
             <Navbar />
-            <main className="px-4 py-6 space-y-2">
+            <main className="mx-auto max-w-7xl px-4 py-6 space-y-2">
                 <div className="font-semibold text-lg mb-5">Inbox</div>
                 <div>
                     <div className="rounded-lg bg-green-400/10 p-3 shadow-md hover:bg-green-400/20 sm:p-3 md:p-4">
