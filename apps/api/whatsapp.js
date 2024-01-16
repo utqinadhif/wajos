@@ -1,4 +1,4 @@
-import { existsSync, readdir, rmSync } from 'fs'
+import { existsSync, readdir, rmSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { toDataURL } from 'qrcode'
 import __dirname from './dirname.js'
@@ -173,26 +173,20 @@ const getSession = (sessionId) => {
 
 const getAllSession = () => {
     let sess = []
-    let readDir = readdir(sessionsDir(), (err, files) => {
-        if (err) {
-            throw err
+    let files = readdirSync(sessionsDir())
+
+    for (const file of files) {
+        if (!file.startsWith('beopati_') || file.endsWith('_store')) {
+            continue
         }
 
-        for (const file of files) {
-            if (!file.startsWith('beopati_') || file.endsWith('_store')) {
-                continue
-            }
+        const filename = file.replace('.json', '')
+        const sessionId = filename.substring(8)
 
-            const filename = file.replace('.json', '')
-            const sessionId = filename.substring(8)
+        sess.push(sessionId)
+    }
 
-            sess.push(sessionId)
-        }
-
-        return sess
-    })
-    console.log(readDir)
-    return readDir
+    return sess
 }
 
 const deleteSession = (sessionId) => {

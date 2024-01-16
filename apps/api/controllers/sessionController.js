@@ -58,10 +58,10 @@ const del = async (req, res) => {
     response(res, 200, true, 'The session has been successfully deleted.')
 }
 
-const all = async (req, res) => {
+const all = (req, res) => {
     const session = getAllSession()
 
-    if (session) return response(res, 200, true, session)
+    if (session) return response(res, 200, true, 'Success get all session', session)
 
     response(res, 404, false, 'Session not found.')
 }
