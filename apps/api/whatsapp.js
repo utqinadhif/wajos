@@ -172,7 +172,27 @@ const getSession = (sessionId) => {
 }
 
 const getAllSession = () => {
-    return sessions
+    let sess = []
+    let readDir = readdir(sessionsDir(), (err, files) => {
+        if (err) {
+            throw err
+        }
+
+        for (const file of files) {
+            if (!file.startsWith('beopati_') || file.endsWith('_store')) {
+                continue
+            }
+
+            const filename = file.replace('.json', '')
+            const sessionId = filename.substring(8)
+
+            sess.push(sessionId)
+        }
+
+        return sess
+    })
+    console.log(readDir)
+    return readDir
 }
 
 const deleteSession = (sessionId) => {
